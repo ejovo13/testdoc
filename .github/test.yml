@@ -1,0 +1,9 @@
+name: "Run pytest"
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PYPI_TOKEN: $ {{ secrets.PYPI_TOKEN }}
