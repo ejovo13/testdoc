@@ -1,4 +1,4 @@
-exclude: 'docs|tex|.dat|.mod|tests'
+exclude: 'docs|tex|\.dat|\.mod|tests'
 repos:
 -   repo: meta
     hooks:
