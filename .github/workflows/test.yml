@@ -19,7 +19,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        apt-get install pipx
+        sudo apt-get install pipx
         pipx install poetry
     - name: Build package
       run: poetry install --with test
