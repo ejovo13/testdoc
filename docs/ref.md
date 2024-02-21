@@ -2,4 +2,4 @@
 
 ## Module Class
 
-::: testdoc.module.Module
+::: testdocs.module.Module

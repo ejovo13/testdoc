@@ -17,10 +17,10 @@ def test_modules():
     # Assert the number of submodules
 
     gp_sn = grand_parent.submodule_names()
-    assert "testdoc.module" in gp_sn
-    assert "testdoc.tests" in gp_sn
+    assert "testdocs.module" in gp_sn
+    assert "testdocs.tests" in gp_sn
 
-    assert grand_parent.name() == "testdoc"
+    assert grand_parent.name() == "testdocs"
 
 
 def test_documentation():

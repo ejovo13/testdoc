@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "testdocs"
-version = "0.1.0"
+version = "0.1.1"
 description = "doctest++"
 authors = ["Evan Voyles <evan.voyles@intrafentech.com>"]
 readme = "README.md"
@@ -8,9 +8,11 @@ include = [
     { path = "testdocs" }
 ]
 
+[tool.poetry.scripts]
+testdocs = "testdocs:__main__.main"
+
 [tool.poetry.dependencies]
 python = "^3.11"
-
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.0.1"

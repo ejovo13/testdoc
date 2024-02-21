@@ -96,6 +96,7 @@ class Module:
         Examples
         --------
         ```python
+        >>> import xml.etree; import xml.etree.ElementPath; import xml.etree.ElementTree
         >>> mod = Module('xml.etree')
         >>> mod.submodule_names()
         ['xml.etree.ElementPath', 'xml.etree.ElementTree']
