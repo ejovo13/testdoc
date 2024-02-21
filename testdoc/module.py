@@ -6,6 +6,8 @@ import doctest
 import sys
 from typing import Any, Optional
 
+from .exceptions import DocumentationError
+
 
 class Module:
     """Wrapper around the built in ModuleType.
@@ -56,16 +58,20 @@ class Module:
         """Return the type `ModuleType`. For some reason we can't access this named tuple so we retrieve it dynamically."""
         return type(self.mod)
 
-    def new_child(self, mod_name: str) -> Module:
+    def new_child(self, mod_name: str) -> Optional[Module]:
         """Create a new Module that is a submodule of `self`."""
         child_name = f"{self.mod.__name__}.{mod_name}"
-        return Module(child_name)
+        try:
+            return Module(child_name)
+        except Exception:
+            return None
 
     def submodules(self) -> list[Module]:
         """Return a list of modules belonging to `self`."""
-        return [
+        modules = [
             self.new_child(att) for att in dir(self.mod) if self.attr_is_module(att)
         ]
+        return [m for m in modules if m is not None]
 
     def submodule_names(self) -> list[str]:
         """Return a list of submodule names that are children of `self`."""
@@ -83,18 +89,17 @@ class Module:
         """Check if the attribute in `dir(self)` is a submodule."""
         return isinstance(self.attr(attribute_name), self.mod_type())
 
-    def test(self, **kwargs):
+    def doctest(self, verbose: bool = True, recursive: bool = False):
         """Call `doctest.testmod` on this module."""
-        res = doctest.testmod(self.mod, **kwargs)
+        res = doctest.testmod(self.mod, verbose=verbose)
         if res.failed > 0:
-            raise Exception("Documentation error!")
+            raise DocumentationError("Documentation error!")
+        if recursive:
+            for s in self.submodules():
+                s.doctest(verbose=verbose, recursive=recursive)
 
 
-def testmod(module: str, submodules: bool = False, verbose: bool = False):
+def testmod(module: str, recursive=True, verbose: bool = False):
     """Call doctest on this module and if `submodules`, on all of it's submodules as well."""
     mod = Module(module)
-    mod.test(verbose=verbose)
-    if submodules:
-        for s in mod.submodules():
-            res = s.test(verbose=verbose)
-            assert res
+    mod.doctest(verbose=verbose, recursive=recursive)

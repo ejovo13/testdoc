@@ -31,7 +31,13 @@ def test_documentation():
 
     assert testdoc.name() == root.name()
 
-    root.test(verbose=True)
-    for s in root.submodules():
-        s.test(verbose=True)
+    root.doctest(recursive=True, verbose=True)
+
+def test_info():
+    """Get some information about the output."""
+    sys = Module("sys")
+    print(sys)
+    print(sys.submodule_names())
+    col = Module("collections")
+    print(col.submodule_names())
 
