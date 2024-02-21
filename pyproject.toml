@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "testdoc"
+version = "0.1.0"
+description = "doctest++"
+authors = ["Evan Voyles <evan.voyles@intrafentech.com>"]
+readme = "README.md"
+packages = [
+    { include = "testdoc"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

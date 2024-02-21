@@ -1,0 +1,1 @@
+"""Augmented version of doctest."""
