@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "testdoc"
+name = "testdocs"
 version = "0.1.0"
 description = "doctest++"
 authors = ["Evan Voyles <evan.voyles@intrafentech.com>"]
 readme = "README.md"
 include = [
-    { path = "testdoc" }
+    { path = "testdocs" }
 ]
 
 [tool.poetry.dependencies]
