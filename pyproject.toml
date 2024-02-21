@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "testdocs"
-version = "0.1.1"
+version = "0.1.2"
 description = "doctest++"
 authors = ["Evan Voyles <evan.voyles@intrafentech.com>"]
 readme = "README.md"
