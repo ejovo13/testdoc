@@ -14,14 +14,31 @@ class Module:
 
     Examples
     --------
-    >>> mod = Module('sys')
+    ```python
+    >>> mod = Module('collections')
     >>> mod.name()
-    'sys'
+    'collections'
+
+    >>> mod.submodule_names()
+    ['collections.abc']
+
+    ```
 
     """
 
     def __init__(self, module: str):
-        """Look inside the sys.modules dictionary to get a handle to our module."""
+        """Look inside the sys.modules dictionary to get a handle to our module.
+
+        Examples
+        --------
+        ```py
+        >>> mod = Module('typing')
+        >>> mod.name()
+        'typing'
+
+        ```
+
+        """
         self.mod = sys.modules[module]
 
     def __str__(self) -> str:
@@ -54,11 +71,11 @@ class Module:
         parent = self.parent()
         return None if parent is None else (parent.parent())
 
-    def mod_type(self) -> type:
+    def _mod_type(self) -> type:
         """Return the type `ModuleType`. For some reason we can't access this named tuple so we retrieve it dynamically."""
         return type(self.mod)
 
-    def new_child(self, mod_name: str) -> Optional[Module]:
+    def _new_child(self, mod_name: str) -> Optional[Module]:
         """Create a new Module that is a submodule of `self`."""
         child_name = f"{self.mod.__name__}.{mod_name}"
         try:
@@ -69,25 +86,36 @@ class Module:
     def submodules(self) -> list[Module]:
         """Return a list of modules belonging to `self`."""
         modules = [
-            self.new_child(att) for att in dir(self.mod) if self.attr_is_module(att)
+            self._new_child(att) for att in dir(self.mod) if self._attr_is_module(att)
         ]
         return [m for m in modules if m is not None]
 
     def submodule_names(self) -> list[str]:
-        """Return a list of submodule names that are children of `self`."""
+        """Return a list of submodule names that are children of `self`.
+
+        Examples
+        --------
+        ```python
+        >>> mod = Module('xml.etree')
+        >>> mod.submodule_names()
+        ['xml.etree.ElementPath', 'xml.etree.ElementTree']
+
+        ```
+
+        """
         return [child.name() for child in self.submodules()]
 
-    def attr_type(self, attribute_name: str) -> type:
+    def _attr_type(self, attribute_name: str) -> type:
         """Return the type of `attribute_name`."""
-        return type(self.attr(attribute_name))
+        return type(self._attr(attribute_name))
 
-    def attr(self, attribute_name: str) -> Any:
+    def _attr(self, attribute_name: str) -> Any:
         """Retrieve an attribute from the underlying module."""
         return getattr(self.mod, attribute_name, None)
 
-    def attr_is_module(self, attribute_name: str) -> bool:
+    def _attr_is_module(self, attribute_name: str) -> bool:
         """Check if the attribute in `dir(self)` is a submodule."""
-        return isinstance(self.attr(attribute_name), self.mod_type())
+        return isinstance(self._attr(attribute_name), self._mod_type())
 
     def doctest(self, verbose: bool = True, recursive: bool = False):
         """Call `doctest.testmod` on this module."""

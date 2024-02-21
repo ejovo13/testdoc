@@ -41,3 +41,11 @@ def test_info():
     col = Module("collections")
     print(col.submodule_names())
 
+def test_xml():
+    """Traverse the XML module tree."""
+
+    xml = Module('xml')
+    print(xml)
+    print(xml.submodule_names())
+    etree = xml.submodules()[0]
+    print(etree.submodule_names())

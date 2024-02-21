@@ -1,0 +1,32 @@
+site_name: Testdoc documentation
+repo_url: https://github.com/ejovo13/testdoc
+site_description: Documentation for the testdoc package
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+
+nav:
+  - Chapter 0: 'index.md'
+  - Reference:
+    - Chapter 1: 'ref.md'
+
+theme:
+  name: material
+  features:
+    - content.code.copy
+
+plugins:
+- search
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          show_signature_annotations: true
+          signature_crossrefs: true
+
