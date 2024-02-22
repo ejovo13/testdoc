@@ -127,6 +127,31 @@ class Module:
             for s in self.submodules():
                 s.doctest(verbose=verbose, recursive=recursive)
 
+    def all(self) -> list[str]:
+        """Return the `__all__` attribute of this module.
+
+        Examples
+        --------
+        ```python
+        >>> import testdocs
+        >>> td_mod = Module("testdocs")
+        >>> "Module" in td_mod.all()
+        True
+        >>> "testmod" in td_mod.all()
+        True
+
+        ```
+
+        """
+        if self.name() == "__main__":
+            return list(self.mod.__dir__())
+        else:
+            return self.mod.__all__
+
+    def dir(self) -> list[str]:
+        """Return the `__dir__` contents of this module."""
+        return list(self.mod.__dir__())
+
 
 def testmod(module: str, recursive=True, verbose: bool = False):
     """Call doctest on this module and if `submodules`, on all of it's submodules as well."""

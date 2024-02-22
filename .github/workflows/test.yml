@@ -25,3 +25,5 @@ jobs:
       run: poetry install --with test
     - name: Run tests
       run: poetry run pytest -rF
+    - name: Test documentation
+      run: poetry run pytest --doctest-modules testdocs

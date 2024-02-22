@@ -11,9 +11,19 @@ Test all modules (and submodules) docstrings in one go!
 
 ## Download
 
-Download with pip using 
+Download with pip using
 ```
 pip install testdocs
 ```
 
 ## Usage
+
+Use in pytest modules to easily test all of your projects current documentation
+
+```python
+import testdocs
+import my_pkg
+
+def test_docs():
+    testdocs.testmod("my_pkg")
+```
